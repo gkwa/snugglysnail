@@ -1,14 +1,5 @@
 #!/bin/bash
 
-# Neo4j installation in an Ubuntu container using incus
-echo "Setting up Neo4j in an Ubuntu 22.04 container..."
-
-# Remove any existing container named neo4j
-incus rm --force neo4j 2>/dev/null || true
-
-# Launch a new Ubuntu 22.04 container
-incus launch images:ubuntu/22.04/cloud neo4j
-
 cat <<'EOT' >setup_neo4j.sh
 #!/bin/bash
 
@@ -154,6 +145,15 @@ echo "Bolt connection: bolt://$PUBLIC_IP:7687"
 echo "Default credentials: neo4j:neo4j"
 echo "==================================================================="
 EOT
+
+# Neo4j installation in an Ubuntu container using incus
+echo "Setting up Neo4j in an Ubuntu 22.04 container..."
+
+# Remove any existing container named neo4j
+incus rm --force neo4j 2>/dev/null || true
+
+# Launch a new Ubuntu 22.04 container
+incus launch images:ubuntu/22.04/cloud neo4j
 
 # Push the setup script to the container
 incus file push setup_neo4j.sh neo4j/root/
